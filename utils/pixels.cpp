@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "header.h"
 using namespace std;
 #define GREYSCALE "@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz$CIu23Jcfry%1v7l+it[]{}?j|()=~!-/<>\"^_';,:`. "
 #define RED 31
@@ -8,12 +8,7 @@ using namespace std;
 const string INTENSITY = GREYSCALE;
 
 // https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-struct Pixel
-{
-    int color;
-    int mode;
-    int intensity;
-};
+
 /*
           foreground background
 black        30         40
@@ -24,7 +19,7 @@ blue         34         44
 magenta      35         45
 cyan         36         46
 white        37         47
-intensity 0 - 96
+intensity 0 - 93
 */
 Pixel *GeneratePixel(int color, int intensity, int mode);
 string CreatePixel(Pixel *A);

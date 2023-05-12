@@ -21,15 +21,15 @@ cyan         36         46
 white        37         47
 intensity 0 - 93
 */
-Pixel *GeneratePixel(int color, int intensity, int mode);
-string CreatePixel(Pixel *A);
+Pixel* GeneratePixel(int color, int intensity, int mode);
+string CreatePixel(Pixel* A);
 string NumToString(int n);
 string _A1(int i);
 
 #if __INCLUDE_LEVEL__ == 0
 int main()
 {
-    Pixel *A;
+    Pixel* A;
     for (int j = 30; j < 38; j++)
     {
         for (int i = 0; i < 96; i++)
@@ -47,9 +47,9 @@ int main()
 }
 #endif
 
-Pixel *GeneratePixel(int color, int intensity, int mode)
+Pixel* GeneratePixel(int color, int intensity, int mode)
 {
-    Pixel *A = (Pixel *)malloc(sizeof(Pixel));
+    Pixel* A = (Pixel*)malloc(sizeof(Pixel));
     A->color = color;
     A->intensity = intensity;
     A->mode = mode;
@@ -102,7 +102,7 @@ string _A1(int i)
     }
     return "";
 }
-string CreatePixel(Pixel *A)
+string CreatePixel(Pixel* A)
 {
     string B = "\033[";
     B += NumToString(A->mode) + ";" + NumToString(A->color) + "m" + INTENSITY[A->intensity];

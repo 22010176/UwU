@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
-#include "utils/pixels.cpp"
+#include "utils/renderer.cpp"
 using namespace std;
 
-int main()
-{
-    Pixel *A = GeneratePixel(32, 7, 1);
-    Pixel *B = GeneratePixel(36, 7, 1);
-    cout << CreatePixel(A) << CreatePixel(B);
+const int width = 80, height = 20;
+int main() {
+    Screen* src = CreateScreen(height, width, 2);
+    // clrscr();
 }

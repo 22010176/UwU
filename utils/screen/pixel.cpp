@@ -5,7 +5,6 @@
 using namespace std;
 #define GREYSCALE "@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz$CIu23Jcfry%1v7l+it[]{}?j|()=~!-/<>\"^_';,:`. "
 
-
 /*
           foreground background
 black        30         40
@@ -22,18 +21,16 @@ foreground 30 - 37
 background 40 - 47
 */
 
-
-
 class PIXEL {
 public:
   ~PIXEL() {}
-  PIXEL(int _color, int _intent, int _mode) {
+  PIXEL(int _color = 0, int _intent = 0, int _mode = 0) {
     this->updateProbs(_color, _mode, _intent);
   }
-  PIXEL updateProbs(int _color, int _mode, int _intent) {
-    this->color = _color ? _color : 0;
-    this->mode = _mode ? _mode : 0;
-    this->intent = _intent ? _intent : 0;
+  PIXEL updateProbs(int _color = 0, int _mode = 0, int _intent = 0) {
+    this->color = _color;
+    this->mode = _mode;
+    this->intent = _intent;
     return *this;
   }
   int getColor() { return this->color; }

@@ -1,14 +1,13 @@
 #include <bits/stdc++.h>
-
+#include <vector>
 using namespace std;
-class A {
-public:
-  string he = "asdf";
-};
-struct B { A* test; };
+
+struct A { int x; };
 int main() {
-  A j;
-  B d;
-  d.test = &j;
-  cout << d.test->he;
+  A* a = (A*)malloc(sizeof(A) * 1000);
+  a[0] = { 5 };
+  a[1] = { 2 };
+  for (int i = 0; i < 10;i++) {
+    cout << &a[i] << endl;
+  }
 }

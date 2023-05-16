@@ -3,11 +3,8 @@
 #include <cstdarg>
 #include <cstdlib>
 #include "./pixel.cpp"
-#include "cmath"
 
-#if __INCLUDE_LEVEL__  != 0
-#pragma once
-#endif
+#define SIZE 1000
 
 using namespace std;
 
@@ -20,13 +17,17 @@ struct Pixel {
     pixel->~PIXEL();
     free(this->pos);
   }
-  int* pos;
-  PIXEL* pixel;
+  int* pos; PIXEL* pixel;
 };
 class LAYER {
 public:
+  static LAYER* CreateLayer(int height, int width) {
+    int* rat = (int*)malloc(2 * sizeof(int));
+    rat[0] = 1; rat[1] = 2;
+    return (LAYER*)new LAYER((PIXEL*)new PIXEL(), rat, width, height);
+  }
   ~LAYER() { cout << defPix->updateProbs().render(); }
-  LAYER(PIXEL* def, int width = 100, int height = 100, int* ratio = nullptr) {
+  LAYER(PIXEL* def, int* ratio, int width = 100, int height = 100) {
     this->defPix = def; this->width = width; this->height = height; this->ratio = ratio;
     this->_screen = (Pixel***)malloc(height * sizeof(Pixel**));
     for (int i = 0; i < height;i++) this->_screen[i] = (Pixel**)calloc(width, sizeof(Pixel*));
@@ -42,7 +43,6 @@ public:
       for (int k = 0; k < this->ratio[0];k++) cout << result << endl;
     }
   }
-
   void addPIXELS(int n, ...) {
     va_list ptr; va_start(ptr, n);
     for (int i = 0; i < n;i++) this->_addPixel(va_arg(ptr, Pixel*));
@@ -55,11 +55,12 @@ public:
     }
   }
   Pixel* findPixel(int i, int j) {
-    for (int i = 0; i < PIXELS.size();i++) {
-      Pixel* p = PIXELS.at(i);
-      if (p->pos[0] == i && p->pos[1] == j) return p;
-    }
-    return nullptr;
+    if (i >= height || j >= width) return nullptr;
+    return this->_screen[i][j];
+  }
+  Pixel* findPixel(int* pos) {
+    if (pos[0] >= height || pos[1] >= width) return nullptr;
+    return this->_screen[pos[0]][pos[1]];
   }
 private:
   inline void _addPixel(Pixel* A) {
@@ -78,9 +79,9 @@ int main() {
   srand((unsigned)time(NULL));
 
   int* rat = (int*)malloc(2 * sizeof(int));
-  rat[0] = 3; rat[1] = 5;
+  rat[0] = 1; rat[1] = 2;
 
-  int height = 10, width = 10;
+  int height = 30, width = 30;
   PIXEL A(33, 4);
   vector<Pixel*> B;
   for (int i = 0; i < height;i++) {
@@ -92,9 +93,12 @@ int main() {
       B.push_back(A_);
     }
   }
-  LAYER C(&A, width, height, rat);
+  LAYER C(&A, rat, width, height);
   // cout << "ed";
   C.addPIXELS(B);
   C.print();
+  scanf("%d");
 }
+#else
+#pragma once
 #endif

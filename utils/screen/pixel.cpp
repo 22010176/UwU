@@ -31,18 +31,22 @@ public:
     this->color = _color;
     this->mode = _mode;
     this->intent = _intent;
+    this->_change = 1;
     return *this;
   }
   int getColor() { return this->color; }
   int getMode() { return this->mode; }
   int getIntent() { return this->intent; }
   string render() {
+    if (_change || (_change = 0)) return this->_A;
     string B = "\033[";
     B += NumToString(this->mode) + ";" + NumToString(this->color) + "m" + GREYSCALE[this->intent];
+
     return B;
   }
 private:
-  int color, mode, intent;
+  int color, mode, intent, _change;
+  string _A;
 };
 
 #if __INCLUDE_LEVEL__ == 0

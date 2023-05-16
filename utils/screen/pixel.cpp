@@ -24,10 +24,10 @@ background 40 - 47
 class PIXEL {
 public:
   ~PIXEL() {}
-  PIXEL(int _color = 0, int _intent = 0, int _mode = 0) {
-    this->updateProbs(_color, _mode, _intent);
+  PIXEL(int _color = 0, int _intent = 94, int _mode = 0) {
+    this->updateProbs(_color, _intent, _mode);
   }
-  PIXEL updateProbs(int _color = 0, int _mode = 0, int _intent = 0) {
+  PIXEL updateProbs(int _color = 0, int _intent = 93, int _mode = 0) {
     this->color = _color;
     this->mode = _mode;
     this->intent = _intent;
@@ -38,10 +38,10 @@ public:
   int getMode() { return this->mode; }
   int getIntent() { return this->intent; }
   string render() {
-    if (_change || (_change = 0)) return this->_A;
+    if (!_change) return this->_A;
     string B = "\033[";
     B += NumToString(this->mode) + ";" + NumToString(this->color) + "m" + GREYSCALE[this->intent];
-
+    this->_change = 0;
     return B;
   }
 private:

@@ -3,23 +3,25 @@
 #include <cstdarg>
 #include <cstdlib>
 #include "./pixel.cpp"
-
 #pragma once
 
 using namespace std;
 
-struct Pixel {
-  int* pos;  PIXEL* pixel;
-};
+struct Pixel { int* pos;  PIXEL* pixel; };
 class LAYER {
 public:
+  ~LAYER() { cout << defPix->updateProbs().render(); }
   LAYER(PIXEL* def, int width = 100, int height = 100) {
     this->defPix = def;
     this->width = width;
     this->height = height;
   }
   void print() {
-    cout << this->width << " " << this->height;
+    for (int i = 0; i < PIXELS.size();i++) {
+      PIXEL* A = this->PIXELS.at(i)->pixel;
+      cout << A << endl;
+      cout << A->getIntent() << endl;
+    }
   }
   void addPIXELS(int n, ...) {
     va_list ptr;
@@ -34,7 +36,6 @@ public:
     for (int i = 0; i < n;i++) this->PIXELS.push_back(A[i]);
   }
   void addPIXELS(vector<Pixel*> A) {
-    cout << 33;
     for (int i = 0; i < A.size();i++) this->PIXELS.push_back(A.at(i));
   }
   Pixel* findPixel(int i, int j) {
@@ -48,30 +49,28 @@ private:
   int width, height;
   vector<int> X, Y;
   vector<Pixel*> PIXELS;
-
   PIXEL* defPix;
 };
 
 #if __INCLUDE_LEVEL__ == 0
 int main() {
   srand((unsigned)time(NULL));
-  PIXEL A;
+  PIXEL A(33, 4);
   vector<Pixel*> B;
   for (int i = 0; i < 100;i++) {
-    Pixel* D;
-    PIXEL d(30 + i % 7, i % 93);
-    int* vec = (int*)malloc(2 * sizeof(int));
-    vec[0] = rand() % 100;
-    vec[1] = rand() % 100;
-    D->pixel = &d;
-    cout << 333;
-    D->pos = vec;
-    B.push_back(D);
-  }
-  for (int i = 0; i < B.size();i++) {
+    int* pos = (int*)malloc(2 * sizeof(int));
+    pos[0] = rand() & 100;
+    pos[1] = rand() % 100;
 
+    PIXEL* B_ = (PIXEL*)malloc(sizeof(PIXEL));
+
+
+    Pixel* A_ = (Pixel*)malloc(sizeof(Pixel));
+    A_->pos = pos;
+    A_->pixel = B_;
+    B.push_back(A_);
   }
-  LAYER C(&A);
+  LAYER C(&A, 150, 20);
   C.addPIXELS(B);
   C.print();
 }

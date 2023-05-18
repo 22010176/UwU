@@ -5,7 +5,10 @@ using namespace std;
 #if __INCLUDE_LEVEL__ == 0
 int main() {
   LAYER* A = LAYER::CreateLayer(100, 100);
-  A->print();
+
+  cout << A->Output();
+  cout << A->Output();
+  cout << A->Output();
 }
 #else
 #pragma once

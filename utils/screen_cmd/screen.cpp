@@ -5,7 +5,6 @@
 #include "./pixel.cpp"
 
 #define SIZE 1000
-
 using namespace std;
 
 struct Pixel {
@@ -31,6 +30,22 @@ public:
     this->defPix = def; this->width = width; this->height = height; this->ratio = ratio;
     this->_screen = (Pixel***)malloc(height * sizeof(Pixel**));
     for (int i = 0; i < height;i++) this->_screen[i] = (Pixel**)calloc(width, sizeof(Pixel*));
+
+  }
+  string Output() {
+    if (!this->_change)return this->_out;
+    this->trackChange(0);
+    this->_out = "";
+    for (int i = 0; i < height;i++) {
+      string result_ = "";
+      for (int j = 0; j < width; j++) {
+        Pixel* pix = this->_screen[i][j];
+        string pixel = !pix ? this->defPix->render() : this->_screen[i][j]->pixel->render();
+        for (int k = 0; k < this->ratio[1];k++) result_ += pixel;
+      }
+      for (int k = 0; k < this->ratio[0];k++) this->_out += result_ + "\n";
+    }
+    return this->_out;
   }
   void print() {
     for (int i = 0; i < height;i++) {
@@ -47,12 +62,15 @@ public:
     va_list ptr; va_start(ptr, n);
     for (int i = 0; i < n;i++) this->_addPixel(va_arg(ptr, Pixel*));
     va_end(ptr);
+    this->trackChange();
   }
-  void addPIXELS(int n, Pixel** A) { for (int i = 0; i < n;i++) this->_addPixel(A[i]); }
+  void addPIXELS(int n, Pixel** A) {
+    for (int i = 0; i < n;i++) this->_addPixel(A[i]);
+    this->trackChange();
+  }
   void addPIXELS(vector<Pixel*> A) {
-    for (int i = 0; i < A.size();i++) {
-      this->_addPixel(A.at(i));
-    }
+    for (int i = 0; i < A.size();i++) this->_addPixel(A.at(i));
+    this->trackChange();
   }
   Pixel* findPixel(int i, int j) {
     if (i >= height || j >= width) return nullptr;
@@ -63,12 +81,17 @@ public:
     return this->_screen[pos[0]][pos[1]];
   }
 private:
+  void trackChange(int i = 1) {
+    this->_change = i;
+    cout << this->_change << endl;
+  }
   inline void _addPixel(Pixel* A) {
     if (A == nullptr) return;
     this->_screen[A->pos[0]][A->pos[1]] = (Pixel*)A;
     this->PIXELS.push_back(A);
   }
-  int width, height, * ratio;
+  string _out;
+  int width, height, * ratio, _change = 1;
   vector<Pixel*> PIXELS;
   Pixel*** _screen;
   PIXEL* defPix;
@@ -96,8 +119,10 @@ int main() {
   LAYER C(&A, rat, width, height);
   // cout << "ed";
   C.addPIXELS(B);
+  C.addPIXELS(B);
+  C.addPIXELS(B);
   C.print();
-  scanf("%d");
+  // scanf("%d");
 }
 #else
 #pragma once

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "../others/stringFormat.cpp"
-#pragma once
 
 using namespace std;
 #define GREYSCALE "@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz$CIu23Jcfry%1v7l+it[]{}?j|()=~!-/<>\"^_';,:`. "
@@ -54,4 +53,6 @@ int main() {
   int A = NULL ? 1 : 0;
   cout << A << "ASDFASFD"[4];
 }
+#else
+#pragma once
 #endif

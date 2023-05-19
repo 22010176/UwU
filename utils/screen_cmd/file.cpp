@@ -13,11 +13,12 @@ void WriteFile(string path,string data){
 }
 int main() {
   
-    auto start = std::chrono::system_clock::now();
+    auto start = chrono::system_clock::now();
     // Some computation here
-    auto end = std::chrono::system_clock::now();
-    cout << start << " " << end;
-  WriteFile("./samples/data.txt","asdfasf");
+    auto end = chrono::system_clock::now();
+    cout << time(0);
+    // cout << start << " " << end;
+  // WriteFile("./samples/data.txt","asdfasf");
 
   // string myText;
 

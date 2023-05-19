@@ -13,6 +13,7 @@ void WriteFile(string path,string data){
 }
 int main() {
   string a = to_string(time(0));
+  system("mkdir samples");
   WriteFile("./samples/"+a+".txt",a);
 
   // string myText;

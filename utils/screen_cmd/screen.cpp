@@ -32,8 +32,8 @@ public:
     for (int i = 0; i < height;i++) this->_screen[i] = (Pixel**)calloc(width, sizeof(Pixel*));
 
   }
-  string Output() {
-    if (!this->_change)return this->_out;
+  string Render() {
+    if (!this->_change) return this->_out;
     this->trackChange(0);
     this->_out = "";
     for (int i = 0; i < height;i++) {
@@ -47,17 +47,10 @@ public:
     }
     return this->_out;
   }
-  void print() {
-    for (int i = 0; i < height;i++) {
-      string result = "";
-      for (int j = 0; j < width; j++) {
-        Pixel* pix = this->_screen[i][j];
-        string pixel = !pix ? this->defPix->render() : this->_screen[i][j]->pixel->render();
-        for (int k = 0; k < this->ratio[1];k++) result += pixel;
-      }
-      for (int k = 0; k < this->ratio[0];k++) cout << result << endl;
-    }
-  }
+  void print() { 
+    string A = this->Render();
+    cout << A;
+     }
   void addPIXELS(int n, ...) {
     va_list ptr; va_start(ptr, n);
     for (int i = 0; i < n;i++) this->_addPixel(va_arg(ptr, Pixel*));
@@ -83,7 +76,7 @@ public:
 private:
   void trackChange(int i = 1) {
     this->_change = i;
-    cout << this->_change << endl;
+    // cout << this->_change << endl;
   }
   inline void _addPixel(Pixel* A) {
     if (A == nullptr) return;

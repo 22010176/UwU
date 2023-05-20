@@ -15,7 +15,7 @@ magenta      35         45
 cyan         36         46
 white        37         47
 
-intensity 0 - 93
+intensity 0 - 93 94
 foreground 30 - 37
 background 40 - 47
 */

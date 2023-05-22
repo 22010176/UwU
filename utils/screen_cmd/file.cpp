@@ -37,14 +37,14 @@ int main() {
   char b; int i = 0, c;
   string B;
   while (outfile.read(&b, 1)) {
-    B += bitset<8>(b).to_string() + " ";
+    B += _10to16(b) + " ";
     // cout << b;
-    if (++i % 16 == 0) {
+    if (++i % 32 == 0) {
       B += '\n';
       // cout << endl;
     }
   }
-  WriteFile("Data3.txt", B);
+  WriteFile("Data2.txt", B);
 
   outfile.close();
 

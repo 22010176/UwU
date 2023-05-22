@@ -30,17 +30,21 @@ string _10to16(int i) {
 #if __INCLUDE_LEVEL__ == 0
 int main() {
   // Open the file for writing in binary mode
-  fstream outfile("a/1e3f8eef208159258bb8136391e68605.png", ios::binary | ios::out | ios::in);
+  fstream outfile("a/c.png", ios::binary | ios::out | ios::in);
   int size = (int)pow(2, sizeof(char) * 8);
   char a[size], a_;
 
   char b; int i = 0, c;
   string B;
   while (outfile.read(&b, 1)) {
-    B += _10to16(b) + " ";
-    if (++i % 16 == 0) B += '\n';
+    B += bitset<8>(b).to_string() + " ";
+    // cout << b;
+    if (++i % 16 == 0) {
+      B += '\n';
+      // cout << endl;
+    }
   }
-  WriteFile("Data.txt", B);
+  WriteFile("Data3.txt", B);
 
   outfile.close();
 

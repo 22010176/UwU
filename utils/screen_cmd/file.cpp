@@ -1,11 +1,9 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <fstream>
-#include "screen.cpp"
-#include <vector>
 #include <string>
-#include <math.h>
+#include "screen.cpp"
+#include <string.h>
 using namespace std;
-
 void WriteFile(string path, string data) {
   ofstream file(path);
   file << data;
@@ -16,30 +14,37 @@ void RenderFile(LAYER* A, string path) {
   file << A->RenderGrey();
   file.close();
 }
+string _10to16(int i) {
+  if (!i) return " 00";
+  char a_[] = "0123456789ABCDEF";
+  int b = abs(i);
 
+  string a = i > 0 ? " " : "-";
+  a += b < 16 ? "0" : "";
+  while (b != 0) {
+    a += a_[b % 16];
+    b = int(b / 16);
+  }
+  return a;
+}
 #if __INCLUDE_LEVEL__ == 0
 int main() {
-  int* rat = (int*)malloc(2 * sizeof(int));
-  rat[0] = 1; rat[1] = 3;
+  // Open the file for writing in binary mode
+  fstream outfile("a/1e3f8eef208159258bb8136391e68605.png", ios::binary | ios::out | ios::in);
+  int size = (int)pow(2, sizeof(char) * 8);
+  char a[size], a_;
 
-  int height = 300, width = 300;
-  PIXEL A(33, 4);
-  vector<Pixel*> B;
-  for (int i = 0; i < height;i++) {
-    for (int j = 0;j < width;j++) {
-      int* pos = (int*)malloc(2 * sizeof(int));
-      pos[0] = i; pos[1] = j;
-      PIXEL* B_ = (PIXEL*) new PIXEL(0, (int)(i * j * 0.001) % 94);
-      Pixel* A_ = (Pixel*) new Pixel(pos, B_);
-      B.push_back(A_);
-    }
+  char b; int i = 0, c;
+  string B;
+  while (outfile.read(&b, 1)) {
+    B += _10to16(b) + " ";
+    if (++i % 16 == 0) B += '\n';
   }
-  LAYER C(&A, rat, width, height);
-  // cout << "ed";
-  C.addPIXELS(B);
-  // cout << C.Render();
-  RenderFile(&C, "te.txt");
+  WriteFile("Data.txt", B);
 
+  outfile.close();
+
+  return 0;
 }
 #else
 #pragma once

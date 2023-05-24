@@ -38,7 +38,6 @@ int main() {
   string B;
   while (outfile.read(&b, 1)) {
     B += _10to16(b) + " ";
-    // cout << b;
     if (++i % 32 == 0) {
       B += '\n';
       // cout << endl;
